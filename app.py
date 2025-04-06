@@ -20,11 +20,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 genai.configure(api_key=API_KEY)
 
 # ===== Routes for All Features =====
-
-@app.route('/')
+@app.route('/', methods=['GET', 'HEAD'])
 def home():
-    """Home page with all feature options"""
     return render_template('index.html')
+
 
 @app.route('/ecg-analysis')
 def ecg_analysis():
