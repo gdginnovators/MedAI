@@ -24,8 +24,7 @@ genai.configure(api_key=API_KEY)
 def home():
     return render_template('index.html')
 
-
-@app.route('/ecg-analysis')
+@app.route('/ecg-analysis', methods=['GET', 'HEAD'])
 def ecg_analysis():
     """ECG analysis feature"""
     return render_template('ecg.html')
