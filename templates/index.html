@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedAI - Medical Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #166088;
+            --secondary-color: #4a6fa5;
+            --accent-color: #4fc3f7;
+            --light-bg: #f8fafc;
+        }
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 20px 20px;
+        }
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            transition: all 0.3s;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        .btn-feature {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        .btn-feature:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+        .disclaimer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-heart-pulse me-2"></i>MedAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ecg-analysis">ECG Analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/medical-chatbot">Medical Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/report-comparison">Report Comparison</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">AI-Powered Medical Assistant</h1>
+            <p class="lead mb-5">Advanced tools for healthcare professionals and patients</p>
+            <a href="#features" class="btn btn-light btn-lg px-4">
+                <i class="bi bi-arrow-down-circle me-2"></i>Explore Features
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container mb-5" id="features">
+        <div class="row g-4">
+            <!-- ECG Analysis -->
+            <div class="col-md-4">
+                <div class="card feature-card text-center p-4">
+                    <i class="bi bi-heart feature-icon"></i>
+                    <h3>ECG Analysis</h3>
+                    <p>AI-powered analysis of electrocardiogram readings with detailed interpretation and recommendations.</p>
+                    <a href="/ecg-analysis" class="btn btn-feature">
+                        <i class="bi bi-arrow-right-circle me-2"></i>Analyze ECG
+                    </a>
+                </div>
+            </div>
+
+            <!-- Medical Chatbot -->
+            <div class="col-md-4">
+                <div class="card feature-card text-center p-4">
+                    <i class="bi bi-chat-left-text feature-icon"></i>
+                    <h3>Medical Chatbot</h3>
+                    <p>Get answers to your medical questions from our AI assistant with reliable health information.</p>
+                    <a href="/medical-chatbot" class="btn btn-feature">
+                        <i class="bi bi-arrow-right-circle me-2"></i>Chat Now
+                    </a>
+                </div>
+            </div>
+
+            <!-- Report Comparison -->
+            <div class="col-md-4">
+                <div class="card feature-card text-center p-4">
+                    <i class="bi bi-files feature-icon"></i>
+                    <h3>Report Comparison</h3>
+                    <p>Compare past and present medical reports to track changes and identify important trends.</p>
+                    <a href="/report-comparison" class="btn btn-feature">
+                        <i class="bi bi-arrow-right-circle me-2"></i>Compare Reports
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="container mb-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-4">How MedAI Works</h2>
+                <div class="d-flex mb-3">
+                    <div class="me-4">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <span class="fw-bold">1</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>Select Your Tool</h4>
+                        <p>Choose from our specialized medical AI tools based on your needs.</p>
+                    </div>
+                </div>
+                <div class="d-flex mb-3">
+                    <div class="me-4">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <span class="fw-bold">2</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>Provide Input</h4>
+                        <p>Upload medical reports, ECG images, or type your health questions.</p>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="me-4">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <span class="fw-bold">3</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>Get AI Analysis</h4>
+                        <p>Receive detailed, professional analysis in seconds.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80" 
+                     alt="Medical AI" class="img-fluid rounded-3 shadow">
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="disclaimer">
+        <div class="container text-center">
+            <div class="alert alert-warning mx-auto" style="max-width: 800px;">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong>Important:</strong> This tool is not a substitute for professional medical advice, diagnosis, or treatment. 
+                Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">© 2023 MedAI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

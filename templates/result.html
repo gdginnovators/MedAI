@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Analysis Report | HealthAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a7fba;
+            --primary-light: #e1f0f9;
+            --secondary: #4caf50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7fa;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.75rem;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .report-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.75rem;
+        }
+
+        .patient-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .patient-info-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .patient-info-label {
+            font-weight: 500;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .patient-info-value {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.05rem;
+        }
+
+        .analysis-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .section-icon {
+            width: 36px;
+            height: 36px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1rem;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.25rem;
+        }
+
+        .section-content {
+            padding-left: 3rem;
+            line-height: 1.7;
+        }
+
+        .key-findings {
+            background-color: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .risk-factors {
+            background-color: #ffeeee;
+            border-left: 4px solid var(--danger);
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .recommendations {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--secondary);
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: #1e6ea0;
+            border-color: #1e6ea0;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background-color: white;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .patient-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .analysis-card {
+                padding: 1.5rem;
+            }
+            
+            .section-content {
+                padding-left: 0;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-heartbeat logo-icon"></i>
+                <span class="logo-text">HealthAI</span>
+            </div>
+            <div class="report-date">{{ analysis_date }}</div>
+        </header>
+        
+        <h1 class="report-title">Medical Analysis Report</h1>
+        
+        <div class="patient-card">
+            <div class="patient-info-item">
+                <div class="patient-info-label">Patient Name</div>
+                <div class="patient-info-value">{{ patient_info.split(',')[0] | trim }}</div>
+            </div>
+            <div class="patient-info-item">
+                <div class="patient-info-label">Age</div>
+                <div class="patient-info-value">{{ patient_info.split(',')[1] | trim if patient_info.split(',')[1] else 'N/A' }}</div>
+            </div>
+            <div class="patient-info-item">
+                <div class="patient-info-label">Gender</div>
+                <div class="patient-info-value">{{ patient_info.split(',')[2] | trim if patient_info.split(',')[2] else 'N/A' }}</div>
+            </div>
+            <div class="patient-info-item">
+                <div class="patient-info-label">Report Date</div>
+                <div class="patient-info-value">{{ analysis_date }}</div>
+            </div>
+        </div>
+        
+        <div class="analysis-card">
+            {% if '🔍' in analysis %}
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h2 class="section-title">Key Findings</h2>
+                    </div>
+                    <div class="section-content key-findings">
+                        {{ analysis.split('🔍')[1].split('⚠️')[0].split('✅')[0] | safe }}
+                    </div>
+                </div>
+            {% endif %}
+            
+            {% if '⚠️' in analysis %}
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h2 class="section-title">Risk Factors</h2>
+                    </div>
+                    <div class="section-content risk-factors">
+                        {{ analysis.split('⚠️')[1].split('✅')[0] | safe }}
+                    </div>
+                </div>
+            {% endif %}
+            
+            {% if '✅' in analysis %}
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h2 class="section-title">Recommendations</h2>
+                    </div>
+                    <div class="section-content recommendations">
+                        {{ analysis.split('✅')[1] | safe }}
+                    </div>
+                </div>
+            {% endif %}
+            
+            {% if '🔍' not in analysis and '⚠️' not in analysis and '✅' not in analysis %}
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-file-medical-alt"></i>
+                        </div>
+                        <h2 class="section-title">Analysis Summary</h2>
+                    </div>
+                    <div class="section-content">
+                        {{ analysis | safe }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="action-buttons">
+            <a href="/" class="btn btn-outline">
+                <i class="fas fa-chevron-left"></i> Analyze Another Report
+            </a>
+            <button class="btn btn-primary" onclick="window.print()">
+                <i class="fas fa-print"></i> Print Report
+            </button>
+            <button class="btn btn-primary" onclick="downloadReport()">
+                <i class="fas fa-download"></i> Download PDF
+            </button>
+        </div>
+        
+        <footer>
+            <p>© <span id="current-year"></span> HealthAI | This AI-generated report should be reviewed by a qualified healthcare professional.</p>
+            <p>Confidential Patient Document - HIPAA Protected Health Information</p>
+        </footer>
+    </div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Function to handle PDF download (would need backend implementation)
+        function downloadReport() {
+            alert('PDF download functionality would be implemented with a PDF generation library');
+            // In a real implementation, this would call your backend to generate a PDF
+            // window.location.href = '/download-report?patient={{ patient_info }}';
+        }
+    </script>
+</body>
+</html>

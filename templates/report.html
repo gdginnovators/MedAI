@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Report Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #e3f2fd;
+            --accent-color: #166088;
+            --light-bg: #f8fafc;
+        }
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: none;
+        }
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            padding: 1rem 1.5rem;
+        }
+        .form-label {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        .file-upload {
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: white;
+        }
+        .file-upload:hover {
+            border-color: var(--primary-color);
+            background-color: var(--secondary-color);
+        }
+        .file-upload i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .analysis-result {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            white-space: pre-wrap;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+        .risk-factor {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        .recommendation {
+            color: #28a745;
+            font-weight: 600;
+        }
+        .patient-info-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .flash-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            min-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto text-center">
+                    <h1><i class="bi bi-heart-pulse"></i> Medical Report Analysis</h1>
+                    <p class="lead">Compare past and present medical reports with AI-powered analysis</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message">
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <div class="container">
+        {% if not request.method == 'POST' %}
+        <!-- Input Form -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="mb-0">Patient Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="patient_info" class="form-label">Patient Details (Optional)</label>
+                                <textarea class="form-control" id="patient_info" name="patient_info" rows="3" placeholder="Patient name, age, known conditions, etc."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="mb-0">Past Medical Report</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Upload Past Report (Image or Text)</label>
+                                <div class="file-upload" onclick="document.getElementById('past_report').click()">
+                                    <i class="bi bi-file-earmark-medical"></i>
+                                    <p>Click to upload past medical report</p>
+                                    <p class="text-muted">Supports JPG, PNG, PDF, or TXT files</p>
+                                </div>
+                                <input type="file" class="form-control d-none" id="past_report" name="past_report" required>
+                                <div id="past-file-name" class="mt-2 text-muted"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="mb-0">Present Medical Report</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Upload Current Report (Image or Text)</label>
+                                <div class="file-upload" onclick="document.getElementById('present_report').click()">
+                                    <i class="bi bi-file-earmark-medical-fill"></i>
+                                    <p>Click to upload current medical report</p>
+                                    <p class="text-muted">Supports JPG, PNG, PDF, or TXT files</p>
+                                </div>
+                                <input type="file" class="form-control d-none" id="present_report" name="present_report" required>
+                                <div id="present-file-name" class="mt-2 text-muted"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-clipboard2-pulse"></i> Analyze Reports
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <!-- Results Page -->
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="patient-info-card">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4><i class="bi bi-person-circle"></i> Patient Information</h4>
+                            <p>{{ patient_info if patient_info else "No additional information provided" }}</p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <h4><i class="bi bi-calendar-check"></i> Analysis Date</h4>
+                            <p>{{ analysis_date }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0"><i class="bi bi-clipboard2-pulse"></i> Analysis Results</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="analysis-result" id="analysis-result">
+                            {{ analysis }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="/" class="btn btn-primary">
+                        <i class="bi bi-arrow-repeat"></i> Analyze Another Report
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Show selected file names
+        document.getElementById('past_report').addEventListener('change', function(e) {
+            const fileName = this.files[0] ? this.files[0].name : 'No file selected';
+            document.getElementById('past-file-name').textContent = fileName;
+        });
+
+        document.getElementById('present_report').addEventListener('change', function(e) {
+            const fileName = this.files[0] ? this.files[0].name : 'No file selected';
+            document.getElementById('present-file-name').textContent = fileName;
+        });
+
+        // Format the analysis text when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const analysisElement = document.getElementById('analysis-result');
+            if (analysisElement) {
+                let text = analysisElement.textContent;
+                
+                // Format headings
+                text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                text = text.replace(/\🔍 (.*?)\n/g, '<h5 class="mt-4">🔍 $1</h5>');
+                text = text.replace(/\⚠️ (.*?)\n/g, '<h5 class="mt-4 risk-factor">⚠️ $1</h5>');
+                text = text.replace(/\✅ (.*?)\n/g, '<h5 class="mt-4 recommendation">✅ $1</h5>');
+                
+                // Format lists
+                text = text.replace(/- (.*?)\n/g, '<li>$1</li>');
+                text = text.replace(/(<li>.*<\/li>)+/g, '<ul>$&</ul>');
+                
+                // Format new lines
+                text = text.replace(/\n\n/g, '<br><br>');
+                
+                analysisElement.innerHTML = text;
+            }
+            
+            // Auto-hide flash messages after 5 seconds
+            setTimeout(() => {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(alert => {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
