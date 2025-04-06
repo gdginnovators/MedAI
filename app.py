@@ -27,7 +27,7 @@ def home():
 @app.route('/ecg-analysis', methods=['GET', 'HEAD'])
 def ecg_analysis():
     """ECG analysis feature"""
-    return render_template('ecg.html')
+    return render_template('templates\ecg.html')
 
 @app.route('/medical-chatbot')
 def medical_chatbot():
